@@ -1,3 +1,4 @@
+import { useState } from 'react' 
 import { makeStyles } from '@material-ui/core/styles';
 import {
   BrowserRouter as Router,
@@ -9,6 +10,7 @@ import {
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Chat from './components/Chat'
+import Login from './components/Login'
 
 import './App.css';
 
@@ -21,19 +23,26 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles()
+  const [user, setUser] = useState(null)
 
   return (
     <div className="App">
       <Router>
-        <Header />
-        <section className={classes.main}>
-          <Sidebar/>
-          <Switch>
-            <Route path="/channel/:channelId">
-              <Chat />
-            </Route>
-          </Switch>
-        </section>
+        {!user ? (
+         <Login />
+        ) : (
+          <>
+            <Header />
+            <section className={classes.main}>
+              <Sidebar/>
+              <Switch>
+                <Route path="/channel/:channelId">
+                  <Chat />
+                </Route>
+              </Switch>
+            </section>
+          </>
+        )}
       </Router>
     </div>
   );
