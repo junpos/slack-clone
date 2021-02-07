@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { StarBorderOutlined, InfoOutlined } from '@material-ui/icons'
 import db from '../firebase';
 import Message from './Message'
+import ChatInput from './ChatInput'
 
 const useStyles = makeStyles({
     chat: {
@@ -89,8 +90,9 @@ function Chat() {
                 </div>
             </div>
             <div className={classes.chat__messages}>
-                {channelMessages.map(message => <Message {...message} />)}
+                {channelMessages.map(message => <Message {...message} key={message.timestamp} />)}
             </div>
+            <ChatInput channelName={channelInfo?.name} channelId={channelId} />
         </div>
     )
 }
