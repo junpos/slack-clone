@@ -1,4 +1,3 @@
-import { useState } from 'react' 
 import { makeStyles } from '@material-ui/core/styles';
 import {
   BrowserRouter as Router,
@@ -13,6 +12,7 @@ import Chat from './components/Chat'
 import Login from './components/Login'
 
 import './App.css';
+import { useStateVlaue } from './StateProvider';
 
 const useStyles = makeStyles({
   main: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles()
-  const [user, setUser] = useState(null)
+  const [{ user }] = useStateVlaue()
 
   return (
     <div className="App">

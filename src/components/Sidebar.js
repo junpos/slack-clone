@@ -4,6 +4,7 @@ import { FiberManualRecord, Create, AddCircle } from '@material-ui/icons'
 
 import SidebarOption from './SidebarOption'
 import db from '../firebase';
+import { useStateVlaue } from '../StateProvider';
 
 const useStyles = makeStyles({
     sidebar: {
@@ -64,6 +65,7 @@ const useStyles = makeStyles({
 function Sidebar() {
     const classes = useStyles()
     const [channels, setChannels] = useState([])
+    const [{ user }] = useStateVlaue()
 
     useEffect(() => {
       db.collection('channels').onSnapshot(snapshot => {
@@ -81,7 +83,7 @@ function Sidebar() {
                 <h2>Slack Clone</h2>
                 <h3>
                   <FiberManualRecord />
-                  Jun Kim
+                  {user?.displayName}
                 </h3>
               </div>
               <Create className={classes.sidbar__edit} />

@@ -2,7 +2,8 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { auth, provider } from '../firebase';
-
+import { useStateVlaue } from '../StateProvider';
+import { actionTypes } from '../reducer'
 
 const useStyles = makeStyles({
     login: {
@@ -36,12 +37,16 @@ const useStyles = makeStyles({
 
 function Login() {
     const classes = useStyles()
+    const [_, dispatch] = useStateVlaue()
 
     const handleClick = () => {
         auth
         .signInWithPopup(provider)
         .then(result => {
-            console.log(result)
+            dispatch({
+                type: actionTypes.SET_USER,
+                user: result.user,
+            })
         })
         .catch(error => {
             alert(error.message)

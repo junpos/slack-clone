@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core'
 import { AccessTime, Search, HelpOutline } from '@material-ui/icons'
+import { useStateVlaue } from '../StateProvider';
 
 const useStyles = makeStyles({
     header: {
@@ -49,13 +50,13 @@ const useStyles = makeStyles({
   });
 
 function Header() {
-    const user = {}
     const classes = useStyles()
+    const [{ user }] = useStateVlaue()
 
     return (
         <div className={classes.header}>
             <div className={classes.header__left}>
-                <Avatar className="header__avartar" alt={user?.displayName} serc={user?.photoUrl} />
+                <Avatar className="header__avartar" alt={user?.displayName} src={user?.photoURL} />
                 <AccessTime />
             </div>
 
