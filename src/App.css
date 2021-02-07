@@ -1,4 +1,6 @@
 body {
   --slack-color: #3f0f40; 
   --search-bg-color: #421f44; 
+  --border-color: #49274b;
+  --sidebar-hover-color: #340e36;
 }
