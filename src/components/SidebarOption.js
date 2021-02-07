@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import db from '../firebase';
 
 const useStyle = makeStyles({
     sidebarOption: {
@@ -36,11 +38,40 @@ const useStyle = makeStyles({
     },
 })
 
-function SidebarOption({ Icon, title }) {
+
+
+function SidebarOption({ Icon, title, id, action }) {
     const classes = useStyle()
+    const history = useHistory()
+
+    const selectChannel = () => {
+        if (id) {
+            history.push(`/channel/${id}`)
+        } else{
+            history.push(title)
+        }
+    }
+
+    const createChannel = () => {
+        const channelName = prompt('Please enter the channel name')
+        if (channelName) {
+            db.collection('channels').add({
+                name: channelName
+            })
+        }
+    }
+
+    const handleClick = () => {
+        if (action === 'create') {
+            createChannel()
+            return
+        }
+
+        selectChannel()
+    }
 
     return (
-        <div className={classes.sidebarOption}>
+        <div className={classes.sidebarOption} onClick={handleClick}>
             {Icon && <Icon className={classes.sidebarOption__icon} />}
             {Icon ? (
                 <h3>{title}</h3>
@@ -56,6 +87,8 @@ function SidebarOption({ Icon, title }) {
 SidebarOption.prototype = {
     Icon: PropTypes.node,
     title: PropTypes.string,
+    id: PropTypes.string,
+    action: PropTypes.string,
 }
 
 export default SidebarOption

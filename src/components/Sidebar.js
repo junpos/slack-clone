@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { FiberManualRecord, Create } from '@material-ui/icons'
+import { FiberManualRecord, Create, AddCircle } from '@material-ui/icons'
 
 import SidebarOption from './SidebarOption'
 import db from '../firebase';
@@ -66,7 +66,6 @@ function Sidebar() {
     const [channels, setChannels] = useState([])
 
     useEffect(() => {
-
       db.collection('channels').onSnapshot(snapshot => {
         setChannels(snapshot.docs.map(doc => ({
           id: doc.id,
@@ -87,8 +86,10 @@ function Sidebar() {
               </div>
               <Create className={classes.sidbar__edit} />
             </div>
+
+            <SidebarOption title="Add Channel" Icon={AddCircle} action="create" />
             {channels.map(channel => (
-              <SidebarOption title={channel.name} key={channel.id} />
+              <SidebarOption title={channel.name} key={channel.id} id={channel.id} />
             ))}
         </div>
     )
