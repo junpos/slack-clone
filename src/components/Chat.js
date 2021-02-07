@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from "react-router-dom";
 import { StarBorderOutlined, InfoOutlined } from '@material-ui/icons'
 import db from '../firebase';
+import Message from './Message'
 
 const useStyles = makeStyles({
     chat: {
@@ -49,8 +50,8 @@ const useStyles = makeStyles({
 
 function Chat() {
     const { channelId } = useParams()
-    const [channelInfo, setChannelInfo] = useState()
-    const [channelMessages, setChannelMessages] = useState()
+    const [channelInfo, setChannelInfo] = useState({})
+    const [channelMessages, setChannelMessages] = useState([])
     const classes = useStyles()
 
     useEffect(() => {
@@ -72,9 +73,6 @@ function Chat() {
 
     }, [channelId])
 
-
-    console.log('!!!channelMessages', channelMessages)
-
     return (
         <div className={classes.chat}>
             <div className={classes.chat__header}>
@@ -91,6 +89,7 @@ function Chat() {
                 </div>
             </div>
             <div className={classes.chat__messages}>
+                {channelMessages.map(message => <Message {...message} />)}
             </div>
         </div>
     )
