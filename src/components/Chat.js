@@ -1,78 +1,75 @@
-import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
-import { StarBorderOutlined, InfoOutlined } from '@material-ui/icons'
-import db from '../firebase';
-import Message from './Message'
-import ChatInput from './ChatInput'
+import { StarBorderOutlined, InfoOutlined } from "@material-ui/icons";
+import db from "../firebase";
+import Message from "./Message";
+import ChatInput from "./ChatInput";
 
 const useStyles = makeStyles({
     chat: {
         flex: 0.75,
         flexGrow: 1,
-        overflowY: 'scroll',
-        paddingBottom: 150,
+        overflowY: "scroll",
+        paddingBottom: 150
     },
 
     chat__header: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         padding: 10,
-        border: '1px solid lightgray'
+        border: "1px solid lightgray"
     },
 
-
     chat__headerRight: {
-        '& > p': {
-            display: 'flex',
-            alignItems: 'center',
+        "& > p": {
+            display: "flex",
+            alignItems: "center",
             fontSize: 14,
 
-            '& > svg.MuiSvgIcon-root': {
+            "& > svg.MuiSvgIcon-root": {
                 paddingRight: 5,
-                fontSize: 16,
-            },
-        },
+                fontSize: 16
+            }
+        }
     },
 
     chat__channelName: {
-        display: 'flex',
-        alignItems: 'center',
-        textTransform: 'lowercase',
+        display: "flex",
+        alignItems: "center",
+        textTransform: "lowercase",
 
-        '& > svg.MuiSvgIcon-root': {
+        "& > svg.MuiSvgIcon-root": {
             marginLeft: 10,
-            fontSize: 18,
-        },
-    },
+            fontSize: 18
+        }
+    }
 });
-  
 
 function Chat() {
-    const { channelId } = useParams()
-    const [channelInfo, setChannelInfo] = useState({})
-    const [channelMessages, setChannelMessages] = useState([])
-    const classes = useStyles()
+    const { channelId } = useParams();
+    const [channelInfo, setChannelInfo] = useState({});
+    const [channelMessages, setChannelMessages] = useState([]);
+    const classes = useStyles();
 
     useEffect(() => {
         if (channelId) {
-            db.collection('channels')
-            .doc(channelId)
-            .onSnapshot(snapshot => {
-                setChannelInfo(snapshot.data())
-            })
+            db.collection("channels")
+                .doc(channelId)
+                .onSnapshot((snapshot) => {
+                    setChannelInfo(snapshot.data());
+                });
 
-            db.collection('channels')
-            .doc(channelId)
-            .collection('messages')
-            .orderBy('timestamp', 'asc')
-            .onSnapshot(snapshot => {
-                setChannelMessages(snapshot.docs.map(doc => doc.data()))
-            })
+            db.collection("channels")
+                .doc(channelId)
+                .collection("messages")
+                .orderBy("timestamp", "asc")
+                .onSnapshot((snapshot) => {
+                    setChannelMessages(snapshot.docs.map((doc) => doc.data()));
+                });
         }
-
-    }, [channelId])
+    }, [channelId]);
 
     return (
         <div className={classes.chat}>
@@ -90,11 +87,13 @@ function Chat() {
                 </div>
             </div>
             <div className={classes.chat__messages}>
-                {channelMessages.map(message => <Message {...message} key={message.timestamp} />)}
+                {channelMessages.map((message) => (
+                    <Message {...message} key={message.timestamp} />
+                ))}
             </div>
             <ChatInput channelName={channelInfo?.name} channelId={channelId} />
         </div>
-    )
+    );
 }
 
-export default Chat
+export default Chat;

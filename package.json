@@ -22,7 +22,8 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test"
+        "test": "react-scripts test",
+        "prettier": "prettier --write 'src/**/*.{js,json}'"
     },
     "husky": {
         "hooks": {
@@ -30,7 +31,7 @@
         }
     },
     "lint-staged": {
-        ".js": [
+        ".{js,json}": [
             "./node_modules/.bin/eslint — fix",
             "prettier --write",
             "git add"
