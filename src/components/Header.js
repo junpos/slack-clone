@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core";
-import { AccessTime, Search, HelpOutline } from "@material-ui/icons";
+import { Search, HelpOutline } from "@material-ui/icons";
 import { useStateVlaue } from "../StateProvider";
 
 const useStyles = makeStyles((theme) => ({

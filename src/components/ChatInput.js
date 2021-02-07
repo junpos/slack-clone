@@ -11,13 +11,17 @@ const useStyles = makeStyles((theme) => ({
     chatInput: {
         position: "fixed",
         bottom: 0,
-        padding: "15px 15px 20px 15px",
+        padding: "15px 10px 20px 5px",
         borderTop: "1px solid lightcoral",
         backgroundColor: "white",
+        width: "100%",
+
+        [theme.breakpoints.up("md")]: {
+            width: "75vw",
+            padding: "15px 10px 20px 20px"
+        },
 
         "& > form": {
-            width: "70vw",
-
             position: "relative",
             display: "flex",
             justifyContent: "center",
@@ -27,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
             },
 
             "& > input": {
-                padding: "20px 5px",
+                padding: 20,
                 border: "1px solid gray",
                 borderRadius: 5,
                 flex: 0.8,

@@ -1,18 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { FiberManualRecord, Create, AddCircle } from "@material-ui/icons";
-
+import { FiberManualRecord, Cancel, AddCircle } from "@material-ui/icons";
+import { Button } from "@material-ui/core";
 import SidebarOption from "./SidebarOption";
 import db from "../firebase";
 import { useStateVlaue } from "../StateProvider";
+import { actionTypes } from "../reducer";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     sidebar: {
-        flex: 0.25,
-        color: "white",
+        display: ({ isSidebarOpen }) => (isSidebarOpen ? "block" : "none"),
+        position: ({ isSidebarOpen }) =>
+            isSidebarOpen ? "absolute" : "relative",
         backgroundColor: "var(--slack-color)",
-        borderTop: "1px solid var(--border-color)",
+        color: "white",
+        width: ({ isSidebarOpen }) => (isSidebarOpen ? 260 : "auto"),
         maxWidth: 260,
+        zIndex: 2,
+        height: "100vh",
+        transition: "all 500ms ease-in-out",
+
+        [theme.breakpoints.up("md")]: {
+            flex: 0.25,
+            display: "block !important",
+            position: "relative",
+            borderTop: "1px solid var(--border-color)"
+        },
 
         "& hr": {
             marginTop: 10,
@@ -31,11 +44,10 @@ const useStyles = makeStyles({
     sidebar__info: {
         flex: 1,
 
-        "& > h2": {
-            margin: 0,
-            fontSize: 16,
-            fontWeight: 900,
-            marginBottom: 5
+        "& button": {
+            [theme.breakpoints.up("md")]: {
+                display: "none"
+            }
         },
 
         "& > h3": {
@@ -52,6 +64,19 @@ const useStyles = makeStyles({
         }
     },
 
+    sidebar__button: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+
+        "& > h2": {
+            margin: 0,
+            fontSize: 20,
+            fontWeight: 900,
+            marginBottom: 5
+        }
+    },
+
     sidbar__edit: {
         padding: 8,
         color: "var(--border-color)",
@@ -59,12 +84,19 @@ const useStyles = makeStyles({
         fontSize: 18,
         borderRadius: "50%"
     }
-});
+}));
 
 function Sidebar() {
-    const classes = useStyles();
     const [channels, setChannels] = useState([]);
-    const [{ user }] = useStateVlaue();
+    const [{ user, isSidebarOpen }, dispatch] = useStateVlaue();
+    const classes = useStyles({ isSidebarOpen });
+
+    const toggleSidebar = (e) => {
+        e.preventDefault();
+        dispatch({
+            type: actionTypes.TOGGLE_SIDE_NAV
+        });
+    };
 
     useEffect(() => {
         db.collection("channels").onSnapshot((snapshot) => {
@@ -81,13 +113,19 @@ function Sidebar() {
         <div className={classes.sidebar}>
             <div className={classes.sidebar__header}>
                 <div className={classes.sidebar__info}>
-                    <h2>Slack Clone</h2>
+                    <section className={classes.sidebar__button}>
+                        <h2>Slack Clone</h2>
+                        {isSidebarOpen && (
+                            <Button color="secondary" onClick={toggleSidebar}>
+                                <Cancel />
+                            </Button>
+                        )}
+                    </section>
                     <h3>
                         <FiberManualRecord />
                         {user?.displayName}
                     </h3>
                 </div>
-                <Create className={classes.sidbar__edit} />
             </div>
 
             <SidebarOption
