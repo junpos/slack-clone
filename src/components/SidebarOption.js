@@ -11,8 +11,10 @@ const useStyle = makeStyles({
         display: "flex",
         alignItems: "center",
         paddingLeft: 5,
-        fontSize: 12,
+        fontSize: 13,
         cursor: "pointer",
+        backgroundColor: ({ isActive }) =>
+            isActive ? "var(--sidebar-hover-color)" : "inherit",
 
         "&:hover": {
             opacity: 0.9,
@@ -21,8 +23,9 @@ const useStyle = makeStyles({
 
         "& h3": {
             margin: 0,
-            padding: "5px 0",
-            fontWeight: 400
+            padding: "10px 0",
+            fontWeight: ({ isActive }) => (isActive ? 700 : 400),
+            color: ({ isActive }) => (isActive ? "yellow" : "inherit")
         }
     },
 
@@ -40,8 +43,8 @@ const useStyle = makeStyles({
     }
 });
 
-function SidebarOption({ Icon, title, id, action }) {
-    const classes = useStyle();
+function SidebarOption({ Icon, title, id, action, isActive }) {
+    const classes = useStyle({ isActive });
     const history = useHistory();
     const [_, dispatch] = useStateVlaue();
 
@@ -94,7 +97,8 @@ SidebarOption.prototype = {
     Icon: PropTypes.node,
     title: PropTypes.string,
     id: PropTypes.string,
-    action: PropTypes.string
+    action: PropTypes.string,
+    isActive: PropTypes.bool
 };
 
 export default SidebarOption;

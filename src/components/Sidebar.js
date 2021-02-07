@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { FiberManualRecord, Cancel, AddCircle } from "@material-ui/icons";
 import { Button } from "@material-ui/core";
@@ -88,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Sidebar() {
     const [channels, setChannels] = useState([]);
+    const { channelId } = useParams();
     const [{ user, isSidebarOpen }, dispatch] = useStateVlaue();
     const classes = useStyles({ isSidebarOpen });
 
@@ -132,12 +134,14 @@ function Sidebar() {
                 title="Add Channel"
                 Icon={AddCircle}
                 action="create"
+                isActive={false}
             />
             {channels.map((channel) => (
                 <SidebarOption
                     title={channel.name}
                     key={channel.id}
                     id={channel.id}
+                    isActive={channelId === channel.id}
                 />
             ))}
         </div>

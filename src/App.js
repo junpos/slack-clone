@@ -33,9 +33,9 @@ function App() {
                     <>
                         <Header />
                         <section className={classes.main}>
-                            <Sidebar />
                             <Switch>
                                 <Route path="/channel/:channelId">
+                                    <Sidebar />
                                     <Chat />
                                 </Route>
                             </Switch>
