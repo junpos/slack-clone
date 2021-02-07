@@ -4,22 +4,27 @@ import { Avatar } from "@material-ui/core";
 import { AccessTime, Search, HelpOutline } from "@material-ui/icons";
 import { useStateVlaue } from "../StateProvider";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     header: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         padding: "10px 0px",
         backgroundColor: "var(--slack-color)",
         color: "white"
     },
 
     header__left: {
-        flex: 0.3,
+        flex: 0.4,
+        flexGrow: 0,
         display: "flex",
         alignItems: "center",
-        justifyContent: "flex-start",
-        marginLeft: 20
+        justifyContent: "center",
+        [theme.breakpoints.up("md")]: {
+            flex: 0.3,
+            paddingLeft: 20,
+            justifyContent: "flex-start"
+        }
     },
 
     header__search: {
@@ -27,27 +32,38 @@ const useStyles = makeStyles({
         display: "flex",
         alignItems: "center",
         textAlign: "center",
-        padding: "0px 50px",
+        padding: "0px 25px",
         backgroundColor: "var(--search-bg-color)",
         color: "grey",
         border: "1px grey solid",
         borderRadius: 6,
 
+        [theme.breakpoints.up("md")]: {
+            padding: "0px 50px"
+        },
+
         "& > input": {
             backgroundColor: "transparent",
             border: "none",
             textAlign: "center",
-            minWidth: "30vw"
+            minWidth: "30vw",
+            padding: 5
         }
     },
 
     header__right: {
-        flex: 0.3,
+        flex: 0.2,
+        flexGrow: 0,
         display: "flex",
-        justifyContent: "flex-end",
-        marginRight: 20
+        justifyContent: "center",
+        paddingRight: 10,
+        [theme.breakpoints.up("md")]: {
+            flex: 0.3,
+            paddingRight: 20,
+            justifyContent: "flex-end"
+        }
     }
-});
+}));
 
 function Header() {
     const classes = useStyles();
@@ -61,12 +77,11 @@ function Header() {
                     alt={user?.displayName}
                     src={user?.photoURL}
                 />
-                <AccessTime />
             </div>
 
             <div className={classes.header__search}>
                 <Search />
-                <input placeholder="Search your name" />
+                <input placeholder="Search Channel Name" />
             </div>
 
             <div className={classes.header__right}>

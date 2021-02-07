@@ -11,6 +11,9 @@ import "./App.css";
 import { useStateVlaue } from "./StateProvider";
 
 const useStyles = makeStyles({
+    app: {
+        width: "100vw"
+    },
     main: {
         display: "flex",
         height: "100vh"
@@ -22,7 +25,7 @@ function App() {
     const [{ user }] = useStateVlaue();
 
     return (
-        <div className="App">
+        <div className={classes.app}>
             <Router>
                 {!user ? (
                     <Login />

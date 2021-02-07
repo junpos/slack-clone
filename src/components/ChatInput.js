@@ -2,34 +2,50 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
 import firebase from "firebase";
 import { useStateVlaue } from "../StateProvider";
 import db from "../firebase";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     chatInput: {
-        borderRadius: 20,
+        position: "fixed",
+        bottom: 0,
+        padding: "15px 15px 20px 15px",
+        borderTop: "1px solid lightcoral",
+        backgroundColor: "white",
 
         "& > form": {
+            width: "70vw",
+
             position: "relative",
             display: "flex",
             justifyContent: "center",
 
+            [theme.breakpoints.up("md")]: {
+                flexDirection: "row"
+            },
+
             "& > input": {
-                position: "fixed",
-                bottom: 30,
-                width: "60%",
+                padding: "20px 5px",
                 border: "1px solid gray",
                 borderRadius: 5,
-                padding: 20
+                flex: 0.8,
+
+                [theme.breakpoints.up("md")]: {
+                    flex: 1,
+                    bottom: 30,
+                    padding: 20
+                }
             },
 
             "& > button": {
-                display: "none !important"
+                flex: 0.1,
+                marginLeft: 10
             }
         }
     }
-});
+}));
 
 function ChatInput({ channelName, channelId }) {
     const classes = useStyles();
@@ -58,14 +74,20 @@ function ChatInput({ channelName, channelId }) {
 
     return (
         <div className={classes.chatInput}>
-            <form>
+            <form className={classes.chatInput__form}>
                 <input
                     value={input}
                     placeholder={`Message in #${channelName?.toLowerCase()}`}
                     onChange={messageChange}
                 />
-                <Button type="submit" onClick={sendMessage}>
-                    SEND
+                <Button
+                    type="submit"
+                    onClick={sendMessage}
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                >
+                    <SendIcon />
                 </Button>
             </form>
         </div>
