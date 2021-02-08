@@ -7,6 +7,7 @@ import SidebarOption from "./SidebarOption";
 import db from "../firebase";
 import { useStateVlaue } from "../StateProvider";
 import { actionTypes } from "../reducer";
+import { defaultChannel } from "../constants";
 
 const useStyles = makeStyles((theme) => ({
     sidebar: {
@@ -100,14 +101,19 @@ function Sidebar() {
         });
     };
 
+    const transformChannels = (acc, doc) => {
+        if (doc.id !== defaultChannel.id) {
+            acc.push({
+                id: doc.id,
+                name: doc.data().name
+            });
+        }
+        return acc;
+    };
+
     useEffect(() => {
         db.collection("channels").onSnapshot((snapshot) => {
-            setChannels(
-                snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    name: doc.data().name
-                }))
-            );
+            setChannels(snapshot.docs.reduce(transformChannels, []));
         });
     }, []);
 
@@ -136,6 +142,11 @@ function Sidebar() {
                 action="create"
                 isActive={false}
             />
+            <SidebarOption
+                {...defaultChannel}
+                isActive={pathname === `/channel/${defaultChannel.id}`}
+            />
+
             {channels.map((channel) => (
                 <SidebarOption
                     title={channel.name}

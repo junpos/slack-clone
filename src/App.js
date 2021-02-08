@@ -1,5 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect
+} from "react-router-dom";
 import { auth } from "./firebase";
 
 // Components
@@ -7,6 +12,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
+import { defaultChannel } from "./constants";
 
 import "./App.css";
 import { useStateVlaue } from "./StateProvider";
@@ -45,6 +51,17 @@ function App() {
                         <section className={classes.main}>
                             <Sidebar />
                             <Switch>
+                                <Route
+                                    exact
+                                    path="/"
+                                    render={() => {
+                                        return (
+                                            <Redirect
+                                                to={defaultChannel.route}
+                                            />
+                                        );
+                                    }}
+                                />
                                 <Route path="/channel/:channelId">
                                     <Chat />
                                 </Route>

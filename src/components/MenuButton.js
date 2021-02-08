@@ -24,7 +24,7 @@ function MenuButton() {
 
     const handleLogout = () => {
         auth.signOut().then(() => {
-            window.location.reload();
+            window.location.href = "/";
         });
     };
 
