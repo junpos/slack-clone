@@ -23,6 +23,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
+        "deploy": "react-scripts build && firebase deploy",
         "prettier": "prettier --write 'src/**/*.{js,json}'"
     },
     "husky": {
@@ -31,16 +32,10 @@
         }
     },
     "lint-staged": {
-        ".{js,json}": [
+        "*.{js,json}": [
             "./node_modules/.bin/eslint — fix",
             "prettier --write",
             "git add"
-        ]
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
         ]
     },
     "browserslist": {

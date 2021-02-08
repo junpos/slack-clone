@@ -4,7 +4,7 @@ import { Avatar, Button, Menu, MenuItem } from "@material-ui/core";
 import { auth } from "../firebase";
 import { useStateVlaue } from "../StateProvider";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     menu: {}
 }));
 

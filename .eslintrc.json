@@ -1,0 +1,7 @@
+{
+    "extends": ["react-app", "react-app/jest"],
+    "rules": {
+        "react/jsx-filename-extension": "off",
+        "no-unused-vars": [1, { "args": "all", "varsIgnorePattern": "^_" }]
+    }
+}
