@@ -1,7 +1,5 @@
 export const initialState = {
-    user: {
-        displayName: "Jun"
-    },
+    user: null,
     isSidebarOpen: false
 };
 
