@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import { auth, provider } from "../firebase";
@@ -41,7 +42,10 @@ function Login() {
     const [_, dispatch] = useStateVlaue();
 
     const handleClick = () => {
-        auth.signInWithPopup(provider)
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .then(() => {
+                return auth.signInWithPopup(provider);
+            })
             .then((result) => {
                 dispatch({
                     type: actionTypes.SET_USER,

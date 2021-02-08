@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Avatar } from "@material-ui/core";
 import { Search, HelpOutline } from "@material-ui/icons";
 import { useStateVlaue } from "../StateProvider";
+import MenuButton from "./MenuButton";
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -67,16 +67,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
     const classes = useStyles();
-    const [{ user }] = useStateVlaue();
 
     return (
         <div className={classes.header}>
             <div className={classes.header__left}>
-                <Avatar
-                    className="header__avartar"
-                    alt={user?.displayName}
-                    src={user?.photoURL}
-                />
+                <MenuButton />
             </div>
 
             <div className={classes.header__search}>

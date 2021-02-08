@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { auth } from "./firebase";
 
 // Components
 import Header from "./components/Header";
@@ -9,6 +10,7 @@ import Login from "./components/Login";
 
 import "./App.css";
 import { useStateVlaue } from "./StateProvider";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
     app: {
@@ -23,6 +25,14 @@ const useStyles = makeStyles({
 function App() {
     const classes = useStyles();
     const [{ user }] = useStateVlaue();
+
+    useEffect(() => {
+        auth.onAuthStateChanged((authUser) => {
+            authUser
+                ? localStorage.setItem("authUser", JSON.stringify(authUser))
+                : localStorage.removeItem("authUser");
+        });
+    }, []);
 
     return (
         <div className={classes.app}>
