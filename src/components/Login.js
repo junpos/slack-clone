@@ -6,36 +6,53 @@ import { auth, provider } from "../firebase";
 import { useStateVlaue } from "../StateProvider";
 import { actionTypes } from "../reducer";
 
-const useStyles = makeStyles({
+import slackLogo from "../assets/images/slack-logo.png";
+
+const useStyles = makeStyles((theme) => ({
     login: {
-        padding: 30,
         height: "100vh",
         backgroundColor: "#f8f8f8",
         display: "grid",
-        placeItems: "center"
+        placeItems: "center",
+
+        [theme.breakpoints.up("md")]: {
+            padding: 30
+        }
     },
 
     login__container: {
-        padding: 100,
+        padding: 30,
         textAlign: "center",
         backgroundColor: "white",
         borderRadius: 10,
         boxShadow:
             "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)",
 
+        [theme.breakpoints.up("md")]: {
+            padding: 100
+        },
+
         "& > img": {
-            width: 600,
-            height: 140
+            minWidth: 125,
+            minHeight: 125,
+            maxWidth: 400,
+            maxHeight: 400,
+            width: "50%",
+            height: "50%"
         },
 
         "& > button": {
-            marginTop: 50,
+            marginTop: 10,
             textTransform: "inherit !important",
             backgroundColor: "#0a8d48 !important",
-            color: "white"
+            color: "white",
+
+            [theme.breakpoints.up("md")]: {
+                marginTop: 50
+            }
         }
     }
-});
+}));
 
 function Login() {
     const classes = useStyles();
@@ -60,10 +77,7 @@ function Login() {
     return (
         <div className={classes.login}>
             <div className={classes.login__container}>
-                <img
-                    src="https://a.slack-edge.com/80588/marketing/img/media-kit/img-logos.png"
-                    alt="slack"
-                />
+                <img src={slackLogo} alt="slack" />
                 <h1>Sign in to Slack</h1>
                 <Button onClick={handleClick}>Sign in with Google</Button>
             </div>

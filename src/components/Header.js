@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Search, HelpOutline } from "@material-ui/icons";
-import { useStateVlaue } from "../StateProvider";
 import MenuButton from "./MenuButton";
 
 const useStyles = makeStyles((theme) => ({

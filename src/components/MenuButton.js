@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar, Button, Menu, MenuItem } from "@material-ui/core";
+import { auth } from "../firebase";
 import { useStateVlaue } from "../StateProvider";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +22,12 @@ function MenuButton() {
         setIsOpen(false);
     };
 
+    const handleLogout = () => {
+        auth.signOut().then(() => {
+            window.location.reload();
+        });
+    };
+
     return (
         <div className={classes.menu}>
             <Button
@@ -38,9 +45,9 @@ function MenuButton() {
                 open={isOpen}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </div>
     );
